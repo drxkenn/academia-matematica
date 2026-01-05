@@ -1,0 +1,352 @@
+---
+// src/pages/index.astro
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import CardCurso from "../components/CardCurso.astro";
+import Modal from "../components/Modal.astro";
+import CardModalidad from "../components/CardModalidad.astro";
+---
+
+<Layout title="Academia Math - Potencia el Futuro">
+  <Navbar />
+
+  <div
+    class="relative w-full bg-cover bg-center bg-no-repeat h-screen"
+    style="background-image: url('/img/img-web-2.jpg');"
+  >
+    <div class="absolute inset-0 bg-black/60"></div>
+
+    <div
+      class="relative z-10 h-full flex flex-col justify-center items-center text-center px-4"
+    >
+      <h1
+        class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-4 drop-shadow-lg leading-tight"
+      >
+        EL FUTURO COMIENZA <br />
+        <span class="text-yellow-400">ESTUDIANDO</span>
+      </h1>
+
+      <p
+        class="text-base md:text-2xl text-gray-200 max-w-2xl mb-8 font-medium px-4"
+      >
+        Clases de refuerzo escolar para Primaria y Secundaria. <br
+          class="hidden md:block"
+        /> Metodología divertida y resultados garantizados.
+      </p>
+
+      <a
+        href="#cursos"
+        class="bg-yellow-400 hover:bg-yellow-500 text-purple-900 text-lg font-black py-4 px-10 rounded-full shadow-2xl transition transform hover:scale-105 animate-pulse"
+      >
+        VER CLASES
+      </a>
+    </div>
+  </div>
+
+  <div id="cursos" class="py-16 md:py-24 bg-amber-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-4">
+          CURSOS <span class="text-purple-600">DISPONIBLES</span>
+        </h2>
+        <p class="text-gray-600 text-sm md:text-lg max-w-xl mx-auto">
+          Selecciona el nivel ideal para tus hijos.
+        </p>
+        <div class="flex flex-wrap justify-center gap-2 md:gap-4 mt-6">
+          <button
+            class="px-4 py-2 text-sm md:text-base rounded-full bg-white text-gray-600 font-bold border hover:bg-purple-50"
+            >Secundaria</button
+          >
+          <button
+            class="px-4 py-2 text-sm md:text-base rounded-full bg-white text-gray-600 font-bold border hover:bg-purple-50"
+            >Pre-Universitario</button
+          >
+        </div>
+      </div>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+      >
+        <CardCurso
+          title="Matemática Secundaria (3°-5°)"
+          description="Refuerzo específico para los últimos años. Sube tu promedio ponderado."
+          fullDescription={`
+            Los últimos años de secundaria son críticos. Nos enfocamos exclusivamente en estudiantes de 3ro, 4to y 5to de secundaria que necesitan dominar los temas complejos antes de salir del colegio.
+            
+            Cubrimos los 4 cursos clave que más bajan el promedio: Álgebra, Geometría, Trigonometría y Razonamiento Matemático. Ideal para asegurar el año escolar y tener una base sólida para la universidad.
+        `}
+          topics={[
+            "Álgebra (Funciones y Ecuaciones)",
+            "Trigonometría (Identidades)",
+            "Geometría del Espacio",
+            "Razonamiento Matemático",
+          ]}
+          duration="Ciclo Escolar / Bimestral"
+          image="/img/img-mat-secu.jpg"
+          badgeText="Secundaria Alta"
+          badgeColor="bg-purple-600 text-white"
+        />
+
+        <CardCurso
+          title="Física: Desde Cero a Pre"
+          description="Domina Vectores, Estática y Cinemática sin sufrir con las fórmulas."
+          fullDescription={`
+            La Física es el curso "filtro" de las ingenierías. Ya sea que estés en 4to de media sufriendo con vectores o preparándote para la UNI, este curso es para ti.
+            
+            Nos olvidamos de la memorización y te enseñamos a analizar los fenómenos físicos. Cubrimos desde el Análisis Dimensional y Vectorial hasta temas de peso como Estática, Dinámica, Trabajo y Energía.
+        `}
+          topics={[
+            "Vectores y Cinemática (MRU/V)",
+            "Estática (Diagramas de Cuerpo Libre)",
+            "Dinámica y Energía",
+            "Electromagnetismo (Nivel Pre)",
+          ]}
+          duration="Por tema / Mensual"
+          image="/img/img-fisica.jpg"
+          badgeText="Ciencias"
+          badgeColor="bg-blue-600 text-white"
+        />
+
+        <CardCurso
+          title="Matemática Pre-Universitaria"
+          description="Entrenamiento intensivo tipo admisión (UNI, San Marcos, Callao)."
+          fullDescription={`
+            Nivel exigente para quienes buscan una vacante. Aquí no enseñamos a sumar, enseñamos a competir.
+            
+            Revisamos los 5 cursos de matemática (Aritmética, Álgebra, Geo, Trigo, RM) con enfoque en resolución rápida de problemas tipo examen de admisión. Te enseñamos los "artificios" y atajos para resolver ejercicios en menos de 2 minutos.
+        `}
+          topics={[
+            "Aritmética (Análisis Combinatorio)",
+            "Álgebra (Logaritmos y Funciones)",
+            "Geometría Analítica",
+            "Trigonometría Avanzada",
+          ]}
+          duration="Ciclo Semestral / Intensivo"
+          image="img/img-mat-pre.jpg"
+          badgeText="Pre-Universitario"
+          badgeColor="bg-red-600 text-white"
+        />
+      </div>
+
+      <Modal />
+    </div>
+  </div>
+
+  <div id="modalidades" class="py-16 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-4">
+          ELIGE TU <span class="text-purple-600">PLAN</span>
+        </h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+          Tenemos una opción perfecta para ti, ya sea para nivelación escolar o
+          preparación pre-universitaria.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <CardModalidad
+          title="Ciclo Secundaria"
+          subtitle="Grupos de 3° a 5° Año"
+          price="S/ 140"
+          period="mes"
+          features={[
+            "Aula VIP: Solo 5 alumnos (No masivo).",
+            "3 veces por semana (12 clases al mes).",
+            "Nivelación en Mate y Física.",
+            "Ayuda con tareas del colegio.",
+            "Material PDF incluido gratis.",
+          ]}
+          whatsappMessage="Hola, me interesa el Ciclo Secundaria de S/140."
+        />
+
+        <CardModalidad
+          title="Clases Particulares"
+          subtitle="Refuerzo 1 a 1"
+          price="S/ 30"
+          period="hora"
+          isRecommended={true}
+          features={[
+            "Tú eliges: Mate o Física.",
+            "Atención 100% personalizada.",
+            "Ideal para antes de exámenes.",
+            "Resolución de ejercicios difíciles.",
+            "Promo: 5 horas x S/ 135.",
+          ]}
+          whatsappMessage="Hola, necesito agendar clases particulares."
+        />
+
+        <CardModalidad
+          title="Pack Pre-U"
+          subtitle="Mate + Física Intensivo"
+          price="S/ 200"
+          period="mes"
+          features={[
+            "Nivel UNI / San Marcos.",
+            "Dominio de los 5 cursos de Mate.",
+            "Física completa (Vectores a Electromagnetismo).",
+            "Simulacros tipo admisión quincenales.",
+            "Trucos de resolución rápida (Artificios).",
+          ]}
+          whatsappMessage="Hola, quiero inscribirme en el Pack Pre-U."
+        />
+      </div>
+    </div>
+  </div>
+  <div id="proximamente" class="py-8 md:py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-4">
+          PRÓXIMAMENTE
+        </h2>
+        <p class="text-gray-600 text-sm md:text-lg max-w-xl mx-auto">
+          ¡Cursos divertidos para complementar el aprendizaje!
+        </p>
+      </div>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-8"
+      >
+        <CardCurso
+          title="Curso de Dibujo"
+          description="Desarrolla tu talento artístico. Clases dinámicas para aprender a dibujar."
+          image="/img/img-dibujo.jpg"
+          badgeText="Arte"
+          badgeColor="bg-purple-600"
+          isComingSoon={true}
+        />
+
+        <CardCurso
+          title="Inglés"
+          description="Clases llenas de juegos, canciones y dinámicas para aprender el idioma."
+          image="/img/img-ingles.jpg"
+          badgeText="Idiomas"
+          badgeColor="bg-orange-500"
+          isComingSoon={true}
+        />
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="servicios-digitales"
+    class="py-16 md:py-24 bg-slate-900 text-white border-t-8 border-yellow-400"
+  >
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-black mb-4">
+          ¿NECESITAS UNA <span class="text-yellow-400">WEB?</span>
+        </h2>
+        <p class="text-slate-300 text-lg max-w-2xl mx-auto">
+          Además de enseñar, creamos soluciones digitales para tu negocio o
+          evento especial.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div
+          class="bg-slate-800 rounded-2xl p-8 border border-slate-700 hover:border-blue-400 transition-colors shadow-2xl flex flex-col"
+        >
+          <div
+            class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-3xl mb-6"
+          >
+            💻
+          </div>
+          <h3 class="text-2xl font-bold mb-3 text-blue-400">
+            Desarrollo Web & Sistemas
+          </h3>
+          <p class="text-slate-400 mb-6 grow">
+            Lleva tu emprendimiento al siguiente nivel. Diseñamos páginas
+            modernas, rápidas y adaptables a celulares.
+          </p>
+          <ul class="space-y-2 mb-8 text-sm text-slate-300">
+            <li class="flex items-center">
+              <span class="text-blue-500 mr-2">✓</span> Landing Pages para ventas.
+            </li>
+            <li class="flex items-center">
+              <span class="text-blue-500 mr-2">✓</span> Tiendas Virtuales.
+            </li>
+            <li class="flex items-center">
+              <span class="text-blue-500 mr-2">✓</span> Sistemas a medida.
+            </li>
+          </ul>
+          <a
+            href="https://wa.me/51916446761?text=Hola,%20me%20interesa%20una%20p%C3%A1gina%20web%20para%20mi%20negocio."
+            target="_blank"
+            class="w-full py-3 rounded-xl bg-slate-700 hover:bg-blue-600 text-white font-bold text-center transition-all"
+          >
+            Cotizar Proyecto
+          </a>
+        </div>
+
+        <div
+          class="relative overflow-hidden rounded-2xl p-8 shadow-2xl transform hover:scale-[1.02] transition-transform flex flex-col bg-linear-to-br from-pink-600 via-purple-600 to-indigo-600"
+        >
+          <div
+            class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"
+          >
+          </div>
+
+          <div class="relative z-10">
+            <div
+              class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl mb-6 backdrop-blur-sm"
+            >
+              ✨
+            </div>
+
+            <h3 class="text-3xl font-black mb-3 text-white">
+              Invitaciones Web Premium
+            </h3>
+            <p class="text-pink-100 mb-6 font-medium text-lg">
+              ¡Sorprende a tus invitados! Olvídate del papel. Crea una
+              experiencia interactiva para tu fecha especial.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 mb-8">
+              <div
+                class="bg-white/10 p-2 rounded-lg text-center backdrop-blur-sm"
+              >
+                <span class="block text-2xl mb-1">💍</span>
+                <span class="text-xs font-bold uppercase tracking-wider"
+                  >Bodas</span
+                >
+              </div>
+              <div
+                class="bg-white/10 p-2 rounded-lg text-center backdrop-blur-sm"
+              >
+                <span class="block text-2xl mb-1">👶</span>
+                <span class="text-xs font-bold uppercase tracking-wider"
+                  >Baby Shower</span
+                >
+              </div>
+              <div
+                class="bg-white/10 p-2 rounded-lg text-center backdrop-blur-sm"
+              >
+                <span class="block text-2xl mb-1">👑</span>
+                <span class="text-xs font-bold uppercase tracking-wider"
+                  >XV Años</span
+                >
+              </div>
+              <div
+                class="bg-white/10 p-2 rounded-lg text-center backdrop-blur-sm"
+              >
+                <span class="block text-2xl mb-1">🎂</span>
+                <span class="text-xs font-bold uppercase tracking-wider"
+                  >Cumpleaños</span
+                >
+              </div>
+            </div>
+
+            <a
+              href="https://wa.me/51916446761?text=Hola,%20quiero%20ver%20modelos%20de%20invitaciones%20web."
+              target="_blank"
+              class="block w-full py-4 rounded-xl bg-white text-purple-700 font-black text-center text-lg hover:bg-yellow-300 hover:text-purple-900 transition-colors shadow-lg"
+            >
+              Ver Modelos Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

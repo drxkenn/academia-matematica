@@ -1,0 +1,109 @@
+---
+// src/components/Modal.astro
+---
+
+<div id="course-modal" class="fixed inset-0 bg-black/80 z-50 invisible opacity-0 pointer-events-none flex items-center justify-center p-4 backdrop-blur-sm transition-all duration-300">
+    
+    <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+        
+        <button id="close-modal" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div class="h-48 overflow-hidden bg-gray-100 relative">
+            <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
+             <span id="modal-badge" class="absolute bottom-4 left-4 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wide shadow-sm"></span>
+        </div>
+
+        <div class="p-6 md:p-8">
+            <div class="flex items-center justify-between mb-4">
+                 <span id="modal-duration" class="text-sm text-gray-500 font-semibold flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-lg">
+                    ⏱️ Duración: <span id="modal-duration-text"></span>
+                </span>
+            </div>
+
+            <h2 id="modal-title" class="text-3xl font-black text-gray-900 mb-4 leading-tight"></h2>
+            
+            <p id="modal-description" class="text-gray-600 text-lg leading-relaxed mb-6"></p>
+
+            <div class="bg-purple-50 rounded-xl p-6 mb-8 border border-purple-100">
+                <h3 class="font-bold text-purple-900 mb-3 flex items-center gap-2">
+                    📚 ¿Qué aprenderás? (Referencial)
+                </h3>
+                <ul id="modal-topics" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    </ul>
+            </div>
+
+            </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('course-modal');
+    const closeBtn = document.getElementById('close-modal');
+    const modalContent = document.getElementById('modal-content');
+
+    // Función para cerrar
+    const closeModal = () => {
+        if (!modal || !modalContent) return;
+
+        modal.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+        modalContent.classList.add('scale-95');
+        
+        // Reactivar scroll del body
+        document.body.style.overflow = 'auto';
+    };
+
+    closeBtn?.addEventListener('click', closeModal);
+
+    // Cerrar si clic fuera
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Escuchar evento para abrir
+    document.addEventListener('open-course-modal', (e: any) => {
+        const data = e.detail;
+        if (!modal || !modalContent) return;
+
+        // Rellenar datos
+        const img = document.getElementById('modal-image') as HTMLImageElement;
+        const title = document.getElementById('modal-title');
+        const badge = document.getElementById('modal-badge');
+        const desc = document.getElementById('modal-description');
+        const duration = document.getElementById('modal-duration-text');
+        const topicsList = document.getElementById('modal-topics');
+        
+        // ELIMINADO: const ctaBtn = ... (Ya no lo necesitamos)
+
+        if(img) img.src = data.image;
+        if(title) title.innerText = data.title;
+        if(badge) {
+            badge.innerText = data.badgeText;
+            badge.className = `absolute bottom-4 left-4 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wide shadow-sm ${data.badgeColor}`;
+        }
+        if(desc) desc.innerText = data.fullDescription || data.description;
+        if(duration) duration.innerText = data.duration;
+
+        // Rellenar Temario
+        if(topicsList) {
+            topicsList.innerHTML = '';
+            const topics = data.topics ? JSON.parse(data.topics) : [];
+            topics.forEach((topic: string) => {
+                const li = document.createElement('li');
+                li.className = "flex items-start gap-2 text-sm text-gray-700";
+                li.innerHTML = `<span class="text-green-500 font-bold">✓</span> ${topic}`;
+                topicsList.appendChild(li);
+            });
+        }
+
+        // ELIMINADO: El bloque que configuraba el botón de WhatsApp
+
+        // ABRIR MODAL
+        modal.classList.remove('invisible', 'pointer-events-none', 'opacity-0');
+        modalContent.classList.remove('scale-95');
+        document.body.style.overflow = 'hidden';
+    });
+</script>

@@ -1,0 +1,90 @@
+---
+// src/components/CardCurso.astro
+interface Props {
+    title: string;
+    description: string;
+    image: string;
+    badgeText: string;
+    badgeColor: string;
+    isComingSoon?: boolean;
+    // Nuevos datos opcionales para el modal
+    fullDescription?: string; // Para explicar más detalle en el modal
+    topics?: string[];        // Array de temas: ['Suma', 'Resta', 'División']
+    duration?: string;        // Ej: "8 Semanas"
+}
+
+const { 
+    title, description, image, badgeText, badgeColor, isComingSoon = false,
+    fullDescription, topics, duration 
+} = Astro.props;
+
+// Convertimos el array de temas a string para pasarlo por atributo HTML
+const topicsJson = JSON.stringify(topics || []); 
+---
+
+<div class="bg-white rounded-2xl overflow-hidden shadow-lg group h-full flex flex-col">
+    <div class={`relative h-48 md:h-56 overflow-hidden ${isComingSoon ? 'bg-gray-200' : ''}`}>
+        <img 
+            src={image} 
+            alt={title}
+            class={`w-full h-full object-cover transition duration-500 
+                ${isComingSoon ? 'grayscale opacity-70' : 'transform group-hover:scale-110'}`}
+        />
+        <div class={`absolute top-4 left-4 text-white text-xs font-black px-3 py-1 rounded-full uppercase ${badgeColor}`}>
+            {badgeText}
+        </div>
+    </div>
+
+    <div class="p-5 md:p-6 flex flex-col grow">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+        <p class="text-gray-500 text-sm mb-4 grow line-clamp-3">{description}</p>
+        
+        {isComingSoon ? (
+            <button disabled class="block w-full text-center bg-gray-200 text-gray-400 font-bold py-3 rounded-lg cursor-not-allowed">
+                Próximamente
+            </button>
+        ) : (
+            <button 
+                class="btn-more-info block w-full text-center bg-gray-100 hover:bg-purple-600 hover:text-white text-gray-800 font-bold py-3 rounded-lg transition-colors"
+                data-title={title}
+                data-description={description}
+                data-full-description={fullDescription || description}
+                data-image={image}
+                data-badge-text={badgeText}
+                data-badge-color={badgeColor}
+                data-topics={topicsJson}
+                data-duration={duration || "Consultar duración"}
+            >
+                Más Información
+            </button>
+        )}
+    </div>
+</div>
+
+<script>
+    // Este pequeño script conecta CADA botón con el evento global
+    const buttons = document.querySelectorAll('.btn-more-info');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const target = e.currentTarget as HTMLElement;
+            
+            // Creamos un evento personalizado con todos los datos del botón
+            const event = new CustomEvent('open-course-modal', {
+                detail: {
+                    title: target.dataset.title,
+                    description: target.dataset.description,
+                    fullDescription: target.dataset.fullDescription,
+                    image: target.dataset.image,
+                    badgeText: target.dataset.badgeText,
+                    badgeColor: target.dataset.badgeColor,
+                    topics: target.dataset.topics,
+                    duration: target.dataset.duration
+                }
+            });
+            
+            // Disparamos el evento para que el Modal lo escuche
+            document.dispatchEvent(event);
+        });
+    });
+</script>

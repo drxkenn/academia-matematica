@@ -1,0 +1,50 @@
+---
+// src/components/CardModalidad.astro
+interface Props {
+    title: string;
+    subtitle: string;
+    price: string;
+    period: string; // Ej: "por hora", "mensual"
+    features: string[];
+    isRecommended?: boolean; // Para resaltar una tarjeta (opcional)
+    whatsappMessage: string;
+}
+
+const { title, subtitle, price, period, features, isRecommended = false, whatsappMessage } = Astro.props;
+
+// Configuración del enlace de WhatsApp
+const telefono = "51999427996"; 
+const url = `https://wa.me/${telefono}?text=${encodeURIComponent(whatsappMessage)}`;
+---
+
+<div class={`relative flex flex-col p-6 rounded-2xl shadow-xl transition-transform duration-300 hover:scale-105 border-2 ${isRecommended ? 'bg-white border-purple-500 transform scale-105 z-10' : 'bg-white border-transparent'}`}>
+    
+    {isRecommended && (
+        <div class="absolute top-0 right-0 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg uppercase tracking-wider">
+            Más Popular
+        </div>
+    )}
+
+    <div class="mb-5">
+        <h3 class="text-2xl font-black text-gray-900">{title}</h3>
+        <p class="text-gray-500 text-sm mt-1">{subtitle}</p>
+    </div>
+
+    <div class="mb-6">
+        <span class="text-4xl font-extrabold text-gray-900">{price}</span>
+        <span class="text-gray-500 font-medium">/ {period}</span>
+    </div>
+
+    <ul class="flex-1 space-y-4 mb-8">
+        {features.map((feature) => (
+            <li class="flex items-start text-gray-600 text-sm">
+                <span class="mr-2 text-green-500 text-lg">✓</span>
+                {feature}
+            </li>
+        ))}
+    </ul>
+
+    <a href={url} target="_blank" class={`block w-full py-3 px-6 text-center rounded-xl font-bold transition-colors ${isRecommended ? 'bg-purple-600 text-white hover:bg-purple-700' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}>
+        Elegir Plan
+    </a>
+</div>

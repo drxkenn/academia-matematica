@@ -1,0 +1,31 @@
+---
+interface Props{
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+    temas: string[];
+}
+
+const { title, description, icon, color, temas } = Astro.props;
+---
+
+<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-slate-100 p-6 flex flex-col h-full">
+    <div class={`w-12 h-12 ${color} rounded-lg flex items-center justify-center text-2xl mb-4`}>
+        {icon}
+    </div>
+    
+    <h3 class="text-xl font-bold mb-2 text-slate-800">{title}</h3>
+    <p class="text-slate-600 mb-4 text-sm grow">{description}</p>
+    
+    <div class="bg-slate-50 p-3 rounded-lg mb-4">
+        <p class="text-xs font-semibold text-slate-500 uppercase mb-2">Temas clave:</p>
+        <ul class="text-sm text-slate-700 space-y-1">
+            {temas.map((tema) => (
+                <li class="flex items-center">
+                    <span class="mr-2 text-green-500">✓</span> {tema}
+                </li>
+            ))}
+        </ul>
+    </div>
+</div>

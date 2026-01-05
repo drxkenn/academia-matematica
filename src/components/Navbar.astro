@@ -1,0 +1,106 @@
+---
+// src/components/Navbar.astro
+const whatsappLink = "https://wa.me/51999427996"; 
+---
+
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 text-white transition-all duration-300 py-6">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        
+        <div class="text-xl md:text-3xl font-black tracking-wider z-50 relative">
+            CLASES<span class="text-yellow-400">ONLINE</span>
+        </div>
+
+        <button id="mobile-menu-btn" class="lg:hidden z-50 focus:outline-none text-white">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+
+        <div class="hidden lg:flex items-center gap-8 font-semibold tracking-wide">
+            <a href="#" class="hover:text-yellow-400 transition">Inicio</a>
+            <a href="#cursos" class="hover:text-yellow-400 transition">Cursos</a>
+            <a href="#modalidades" class="hover:text-yellow-400 transition">Modalidades</a>
+            <a href="#servicios-digitales" class="hover:text-yellow-400 transition">Otros Servicios</a>
+            
+            <div class="flex gap-4 ml-4">
+                <a href={whatsappLink} target="_blank" id="btn-register-desktop" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full font-bold transition shadow-lg">
+                    INSCRIBIRSE
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-purple-900 z-40 flex flex-col justify-center items-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300">
+        <a href="#" class="text-2xl font-bold text-white hover:text-yellow-400 mobile-link">Inicio</a>
+        <a href="#cursos" class="text-2xl font-bold text-white hover:text-yellow-400 mobile-link">Cursos</a>
+        <a href="#modalidades" class="text-2xl font-bold text-white hover:text-yellow-400 mobile-link">Modalidades</a>
+        <a href="#servicios-digitales" class="text-2xl font-bold text-white hover:text-yellow-400 mobile-link">Otros Servicios</a>
+        
+        <a href={whatsappLink} class="bg-yellow-400 text-purple-900 px-8 py-3 rounded-full font-black text-xl shadow-lg mobile-link">
+            ¡INSCRIBIRSE AHORA!
+        </a>
+    </div>
+</nav>
+
+<script>
+    const navbar = document.getElementById('main-nav');
+    const btnRegisterDesktop = document.getElementById('btn-register-desktop');
+    const btnMobile = document.getElementById('mobile-menu-btn');
+    const menuMobile = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    let isMenuOpen = false;
+
+    // 1. EFECTO SCROLL NAVBAR
+    window.addEventListener('scroll', () => {
+        // AQUÍ ESTÁ LA SOLUCIÓN: Agregamos "if (navbar)"
+        // Solo ejecutamos esto si navbar existe
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-gray-900', 'shadow-lg', 'py-3');
+                navbar.classList.remove('py-6');
+                
+                if(btnRegisterDesktop) {
+                     btnRegisterDesktop.classList.remove('bg-purple-600', 'text-white');
+                     btnRegisterDesktop.classList.add('bg-yellow-400', 'text-purple-900');
+                }
+            } else {
+                navbar.classList.remove('bg-gray-900', 'shadow-lg', 'py-3');
+                navbar.classList.add('py-6');
+
+                if(btnRegisterDesktop) {
+                    btnRegisterDesktop.classList.add('bg-purple-600', 'text-white');
+                    btnRegisterDesktop.classList.remove('bg-yellow-400', 'text-purple-900');
+                }
+            }
+        }
+    });
+
+    // 2. LÓGICA MENÚ MÓVIL
+    // El signo de interrogación "?" antes del punto ya ayuda, pero validamos dentro
+    btnMobile?.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+        
+        // AQUÍ LA OTRA SOLUCIÓN: Validamos que el menú móvil exista
+        if (menuMobile) {
+            if (isMenuOpen) {
+                menuMobile.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menuMobile.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'auto';
+            }
+        }
+    });
+
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            isMenuOpen = false;
+            // Validamos aquí también
+            if (menuMobile) {
+                menuMobile.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
+</script>
